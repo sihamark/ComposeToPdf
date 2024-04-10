@@ -1,0 +1,72 @@
+package eu.heha.applicator
+
+import android.content.Context
+import android.graphics.pdf.PdfDocument
+import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.dp
+import eu.heha.applicator.ui.theme.ApplicatorTheme
+import kotlinx.coroutines.delay
+import java.util.*
+
+class PdfGenerator(private val context: Context) {
+
+    private val viewTag = "PdfGenerator_" + UUID.randomUUID().toString()
+
+    suspend fun generateDocument(viewGroup: ViewGroup, content: @Composable () -> Unit) {
+        Log.i("PDF", "Generating document")
+        val document = PdfDocument()
+        val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
+        val page = document.startPage(pageInfo)
+        val view = ComposeView(context).apply {
+            setContent {
+                CompositionLocalProvider(LocalDensity.provides(Density(1f, 1f))) {
+                    ApplicatorTheme {
+                        Box(
+                            contentAlignment = Alignment.TopStart
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(width = 595.dp, height = 842.dp)
+                                    .background(color = MaterialTheme.colorScheme.primaryContainer)
+                                    .border(4.dp, Color.Red)
+                            ) {
+                                content()
+                            }
+                        }
+                    }
+                }
+            }
+            tag = viewTag
+        }
+        var existing: View? = viewGroup.findViewWithTag(viewTag)
+        while (existing != null) {
+            viewGroup.removeView(existing)
+            existing = viewGroup.findViewWithTag(viewTag)
+        }
+        viewGroup.addView(view, 0)
+        delay(500)
+        view.draw(page.canvas)
+        viewGroup.removeView(view)
+        document.finishPage(page)
+        val file = context.filesDir.resolve("test.pdf")
+        file.outputStream()
+            .use { document.writeTo(it) }
+        document.close()
+        Log.i("PDF", "finished generating document")
+    }
+}
