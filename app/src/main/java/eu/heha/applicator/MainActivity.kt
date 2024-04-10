@@ -1,7 +1,6 @@
 package eu.heha.applicator
 
 import android.os.Bundle
-import android.view.View
 import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
