@@ -4,29 +4,28 @@ import android.content.Context
 import android.graphics.pdf.PdfDocument
 import android.graphics.pdf.PdfDocument.PageInfo
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.AbstractComposeView
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
@@ -37,32 +36,26 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
+    private lateinit var rootLayout: FrameLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            ActualContent()
-        }
-    }
-
-    @Composable
-    private fun ActualContent() {
-        ApplicatorTheme {
-            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                Column(
-                    modifier = Modifier.padding(innerPadding)
-                ) {
-                    Greeting(name = "Android")
-                    Button(onClick = ::generateDocument) {
-                        Text(text = "generate document")
-                    }
+        rootLayout = FrameLayout(this)
+        rootLayout.addView(
+            ComposeView(this).apply {
+                setContent {
+                    App(generateDocument = ::generateDocument)
                 }
             }
-        }
+        )
+        rootLayout.addView(View(this), 0)
+        setContentView(rootLayout)
     }
 
     private fun generateDocument() {
         lifecycleScope.launch {
+            Log.i("PDF", "Generating document")
             val document = PdfDocument()
             val pageInfo = PageInfo.Builder(595, 842, 1).create()
             val page = document.startPage(pageInfo)
@@ -78,51 +71,64 @@ class MainActivity : ComponentActivity() {
                                     .background(color = MaterialTheme.colorScheme.primaryContainer)
                                     .border(4.dp, Color.Red)
                             ) {
-                                Column(modifier = Modifier.fillMaxSize()) {
-                                    Box(modifier = Modifier
-                                        .weight(1f)
-                                        .width(30.dp)) {
-                                        Greeting(name = "Android")
-                                    }
-                                    Box(
-                                        modifier = Modifier
-                                            .weight(1f)
-                                            .width(30.dp)
-                                            .background(color = Color.Red)
-                                    )
-                                }
+                                DocumentContent()
                             }
                         }
                     }
                 }
             })
-            setContentView(view)
+            rootLayout.addView(view, 0)
+            rootLayout.removeViewAt(1)
             delay(500)
             view.draw(page.canvas)
-            setContent { ActualContent() }
             document.finishPage(page)
             val file = filesDir.resolve("test.pdf")
             file.outputStream()
                 .use { document.writeTo(it) }
             document.close()
+            Log.i("PDF", "finished generating document")
         }
     }
-}
 
+    @Composable
+    private fun DocumentContent() {
+        Column(Modifier.fillMaxSize()) {
+            Row(
+                Modifier
+                    .weight(1f)
+                    .fillMaxWidth()) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxSize()
+                        .background(Color.Blue)
+                )
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxSize()
+                        .background(Color.Red)
+                )
+            }
+            Row(
+                Modifier
+                    .weight(1f)
+                    .fillMaxWidth()) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxSize()
+                        .background(Color.Yellow)
+                )
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxSize()
+                        .background(Color.Green)
+                )
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ApplicatorTheme {
-        Greeting("Android")
+            }
+        }
     }
 }
 
