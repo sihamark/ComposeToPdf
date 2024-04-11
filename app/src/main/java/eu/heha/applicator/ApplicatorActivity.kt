@@ -6,9 +6,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ApplicatorActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var generator: PdfGenerator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +33,6 @@ class ApplicatorActivity : ComponentActivity() {
     }
 
     private fun generateDocument(rootLayout: FrameLayout) {
-        val generator = PdfGenerator(this@ApplicatorActivity)
         lifecycleScope.launch {
             generator.generateDocument(
                 rootLayout,
