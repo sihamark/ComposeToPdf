@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import eu.heha.applicator.ui.theme.ApplicatorTheme
 import io.github.aakira.napier.Napier
@@ -27,11 +28,19 @@ class PdfGenerator(private val context: Context) {
 
     private val viewTag = "PdfGenerator_" + UUID.randomUUID().toString()
 
-    suspend fun generateDocument(viewGroup: ViewGroup, content: @Composable () -> Unit) {
+    suspend fun generateDocument(
+        viewGroup: ViewGroup,
+        size: DpSize = sizeA4,
+        content: @Composable () -> Unit
+    ) {
         Napier.i("Generating document")
         try {
             val document = PdfDocument()
-            val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
+            val pageInfo = PdfDocument.PageInfo.Builder(
+                size.width.value.toInt(),
+                size.height.value.toInt(),
+                1
+            ).create()
             val page = document.startPage(pageInfo)
             val view = ComposeView(context).apply {
                 setContent {
@@ -42,7 +51,7 @@ class PdfGenerator(private val context: Context) {
                             ) {
                                 Box(
                                     modifier = Modifier
-                                        .size(width = 595.dp, height = 842.dp)
+                                        .size(size)
                                         .background(color = MaterialTheme.colorScheme.primaryContainer)
                                         .border(4.dp, Color.Red)
                                 ) {
@@ -72,5 +81,9 @@ class PdfGenerator(private val context: Context) {
         } catch (e: Exception) {
             Napier.e("Error generating document", e)
         }
+    }
+
+    companion object {
+        val sizeA4 = DpSize(595.dp, 842.dp)
     }
 }

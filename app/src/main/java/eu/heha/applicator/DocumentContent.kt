@@ -7,8 +7,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Density
+import eu.heha.applicator.ui.theme.ApplicatorTheme
 
 @Composable
 fun DocumentContent() {
@@ -48,6 +53,16 @@ fun DocumentContent() {
                     .fillMaxSize()
                     .background(Color.Green)
             )
+        }
+    }
+}
+
+@Preview(widthDp = 595, heightDp = 842)
+@Composable
+private fun DocumentContentPreview() {
+    CompositionLocalProvider(LocalDensity.provides(Density(1f, 1f))) {
+        ApplicatorTheme {
+            DocumentContent()
         }
     }
 }
