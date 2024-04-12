@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RootViewModel @Inject constructor(
-    pdfGenerator: PdfGenerator
+    pdfController: PdfController
 ) : ViewModel() {
-    val isGenerating = pdfGenerator.isGenerating
+    val isGenerating = pdfController.isGenerating
 }

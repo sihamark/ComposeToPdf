@@ -14,7 +14,7 @@ import javax.inject.Inject
 class ApplicatorActivity : ComponentActivity() {
 
     @Inject
-    lateinit var generator: PdfGenerator
+    lateinit var pdfController: PdfController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class ApplicatorActivity : ComponentActivity() {
 
     private fun generateDocument(rootLayout: FrameLayout) {
         lifecycleScope.launch {
-            generator.generateDocument(
+            pdfController.generateDocument(
                 rootLayout,
                 content = { DocumentContent() }
             )
