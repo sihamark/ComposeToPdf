@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.Text
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +37,18 @@ class ApplicatorActivity : ComponentActivity() {
         lifecycleScope.launch {
             pdfController.generateDocument(
                 rootLayout,
-                content = { DocumentContent() }
+                pageContents = listOf(
+                    {
+                        DocumentContent {
+                            Text("Hello There")
+                        }
+                    },
+                    {
+                        DocumentContent {
+                            Text("General Kenobi")
+                        }
+                    }
+                )
             )
         }
     }
