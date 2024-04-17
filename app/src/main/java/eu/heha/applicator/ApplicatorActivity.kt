@@ -11,7 +11,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import eu.heha.applicator.model.PdfController
 import eu.heha.applicator.ui.App
 import eu.heha.applicator.ui.document.ApplicationDocumentContainer
+import eu.heha.applicator.ui.document.ApplicationDocumentCoverLetter
 import eu.heha.applicator.ui.document.defaultContainerModel
+import eu.heha.applicator.ui.document.defaultCoverLetterModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,12 +42,13 @@ class ApplicatorActivity : ComponentActivity() {
     private fun generateDocument(rootLayout: FrameLayout) {
         lifecycleScope.launch {
             val containerModel = defaultContainerModel()
+            val coverLetterModel = defaultCoverLetterModel()
             pdfController.generateDocument(
                 rootLayout,
                 pageContents = listOf(
                     {
                         ApplicationDocumentContainer(model = containerModel) {
-                            Text("Hello There")
+                            ApplicationDocumentCoverLetter(model = coverLetterModel)
                         }
                     },
                     {
