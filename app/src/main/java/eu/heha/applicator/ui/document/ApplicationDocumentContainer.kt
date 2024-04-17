@@ -1,4 +1,4 @@
-package eu.heha.applicator
+package eu.heha.applicator.ui.document
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -21,7 +21,10 @@ import androidx.compose.ui.unit.dp
 import eu.heha.applicator.ui.theme.ApplicatorTheme
 
 @Composable
-fun ApplicationDocumentContent(model: ApplicationModel, content: @Composable () -> Unit = {}) {
+fun ApplicationDocumentContainer(
+    model: ApplicationContainerModel,
+    content: @Composable () -> Unit = {}
+) {
     Column(
         Modifier
             .fillMaxSize()
@@ -81,14 +84,14 @@ private fun Footer(footLine: String) {
     )
 }
 
-data class ApplicationModel(
+data class ApplicationContainerModel(
     val name: String,
     val subtitle: String,
     val contactInfo: List<String>,
     val footLine: String
 )
 
-fun defaultModel() = ApplicationModel(
+fun defaultContainerModel() = ApplicationContainerModel(
     name = "Max Mustermann",
     subtitle = "Software Developer",
     contactInfo = listOf("mail: max@mustermann.de", "github: max-mustermann"),
@@ -104,6 +107,6 @@ fun defaultModel() = ApplicationModel(
 @Composable
 private fun DocumentContentPreview() {
     ApplicatorTheme {
-        ApplicationDocumentContent(defaultModel())
+        ApplicationDocumentContainer(defaultContainerModel())
     }
 }

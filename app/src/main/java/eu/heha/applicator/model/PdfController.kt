@@ -1,4 +1,4 @@
-package eu.heha.applicator
+package eu.heha.applicator.model
 
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable

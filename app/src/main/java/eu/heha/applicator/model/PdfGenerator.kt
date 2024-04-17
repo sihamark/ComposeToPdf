@@ -1,4 +1,4 @@
-package eu.heha.applicator
+package eu.heha.applicator.model
 
 import android.content.Context
 import android.graphics.Canvas
