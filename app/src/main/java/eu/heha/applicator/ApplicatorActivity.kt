@@ -35,16 +35,17 @@ class ApplicatorActivity : ComponentActivity() {
 
     private fun generateDocument(rootLayout: FrameLayout) {
         lifecycleScope.launch {
+            val applicationModel = defaultModel()
             pdfController.generateDocument(
                 rootLayout,
                 pageContents = listOf(
                     {
-                        DocumentContent {
+                        ApplicationDocumentContent(model = applicationModel) {
                             Text("Hello There")
                         }
                     },
                     {
-                        DocumentContent {
+                        ApplicationDocumentContent(model = applicationModel) {
                             Text("General Kenobi")
                         }
                     }
