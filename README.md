@@ -11,3 +11,4 @@ Uses android [PdfDocument](https://developer.android.com/reference/android/graph
 - [ ] UI: show pdf generation result in ui
 - [ ] UI: open resulting file from the app
 - [ ] UI: Style Document, show preview in app
+- [ ] Docs: Write Tutorial for others with examples
