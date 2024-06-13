@@ -8,15 +8,21 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import eu.heha.applicator.model.ImageController
 import eu.heha.applicator.model.PdfController
 import eu.heha.applicator.ui.App
 import eu.heha.applicator.ui.document.ApplicationDocumentContainer
+import eu.heha.applicator.ui.document.ApplicationDocumentCoverLetter
 import eu.heha.applicator.ui.document.defaultContainerModel
+import eu.heha.applicator.ui.document.defaultCoverLetterModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ApplicatorActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var imageController: ImageController
 
     @Inject
     lateinit var pdfController: PdfController
@@ -40,12 +46,16 @@ class ApplicatorActivity : ComponentActivity() {
     private fun generateDocument(rootLayout: FrameLayout) {
         lifecycleScope.launch {
             val containerModel = defaultContainerModel()
+            val coverLetterModel = defaultCoverLetterModel()
+
+            imageController.loadImage(containerModel.imageUrl)
+
             pdfController.generateDocument(
                 rootLayout,
                 pageContents = listOf(
                     {
                         ApplicationDocumentContainer(model = containerModel) {
-                            Text("Hello There")
+                            ApplicationDocumentCoverLetter(model = coverLetterModel)
                         }
                     },
                     {

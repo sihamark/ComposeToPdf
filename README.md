@@ -12,3 +12,7 @@ Uses android [PdfDocument](https://developer.android.com/reference/android/graph
 - [ ] UI: open resulting file from the app
 - [ ] UI: Style Document, show preview in app
 - [ ] Docs: Write Tutorial for others with examples
+- [ ] Layout: Design Backgrounds and Styling
+- [ ] Layout: Add Layouts
+  - [ ] Cover Letter
+  - [ ] Profile (Skills, Experience, Education, Languages)
