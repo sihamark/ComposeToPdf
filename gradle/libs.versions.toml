@@ -1,13 +1,12 @@
 [versions]
-agp = "8.3.2"
-kotlin = "1.9.23"
-ksp = "1.9.23-1.0.20"
+agp = "8.4.2"
+kotlin = "2.0.0"
+ksp = "2.0.0-1.0.22"
 
-androidx-core = "1.12.0"
-androidx-lifecycle = "2.7.0"
-androidx-activity = "1.8.2"
-androidx-compose-bom = "2024.04.00"
-androidx-compose-compiler = "1.5.11"
+androidx-core = "1.13.1"
+androidx-lifecycle = "2.8.2"
+androidx-activity = "1.9.0"
+androidx-compose-bom = "2024.06.00"
 
 hilt = "2.51.1"
 
@@ -47,6 +46,7 @@ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hil
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
