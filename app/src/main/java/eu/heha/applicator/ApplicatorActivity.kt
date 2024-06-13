@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,8 +14,10 @@ import eu.heha.applicator.model.PdfController
 import eu.heha.applicator.ui.App
 import eu.heha.applicator.ui.document.ApplicationDocumentContainer
 import eu.heha.applicator.ui.document.ApplicationDocumentCoverLetter
+import eu.heha.applicator.ui.document.ApplicationDocumentProfile
 import eu.heha.applicator.ui.document.defaultContainerModel
 import eu.heha.applicator.ui.document.defaultCoverLetterModel
+import eu.heha.applicator.ui.document.defaultProfileModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -59,6 +60,7 @@ class ApplicatorActivity : ComponentActivity() {
         lifecycleScope.launch {
             val containerModel = defaultContainerModel()
             val coverLetterModel = defaultCoverLetterModel()
+            val profileModel = defaultProfileModel()
 
             imageController.loadImage(containerModel.imageUrl)
 
@@ -72,7 +74,7 @@ class ApplicatorActivity : ComponentActivity() {
                     },
                     {
                         ApplicationDocumentContainer(model = containerModel) {
-                            Text("General Kenobi")
+                            ApplicationDocumentProfile(profileModel)
                         }
                     }
                 )
