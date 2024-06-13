@@ -1,5 +1,7 @@
 package eu.heha.applicator
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
@@ -35,12 +37,22 @@ class ApplicatorActivity : ComponentActivity() {
             ComposeView(this).apply {
                 setContent {
                     App(
-                        generateDocument = { generateDocument(rootLayout) }
+                        generateDocument = { generateDocument(rootLayout) },
+                        openDocument = ::openDocument
                     )
                 }
             }
         )
         setContentView(rootLayout)
+    }
+
+    private fun openDocument(uri: Uri) {
+        startActivity(
+            Intent(Intent.ACTION_VIEW).apply {
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                setDataAndType(uri, contentResolver.getType(uri))
+            }
+        )
     }
 
     private fun generateDocument(rootLayout: FrameLayout) {
