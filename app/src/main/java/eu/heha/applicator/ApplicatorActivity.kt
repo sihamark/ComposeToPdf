@@ -74,7 +74,10 @@ class ApplicatorActivity : ComponentActivity() {
                     },
                     {
                         ApplicationDocumentContainer(model = containerModel) {
-                            ApplicationDocumentProfile(profileModel)
+                            ApplicationDocumentProfile(
+                                sidePaneSections = profileModel.take(3),
+                                mainPaneSections = profileModel.drop(3)
+                            )
                         }
                     }
                 )
