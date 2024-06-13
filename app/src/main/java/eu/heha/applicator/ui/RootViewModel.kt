@@ -9,5 +9,5 @@ import javax.inject.Inject
 class RootViewModel @Inject constructor(
     pdfController: PdfController
 ) : ViewModel() {
-    val isGenerating = pdfController.isGenerating
+    val documentResult = pdfController.documentResult
 }
