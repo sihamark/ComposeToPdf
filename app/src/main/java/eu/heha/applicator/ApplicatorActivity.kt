@@ -8,6 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import eu.heha.applicator.model.PdfController
+import eu.heha.applicator.ui.App
+import eu.heha.applicator.ui.document.ApplicationDocumentContainer
+import eu.heha.applicator.ui.document.defaultContainerModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,16 +39,17 @@ class ApplicatorActivity : ComponentActivity() {
 
     private fun generateDocument(rootLayout: FrameLayout) {
         lifecycleScope.launch {
+            val containerModel = defaultContainerModel()
             pdfController.generateDocument(
                 rootLayout,
                 pageContents = listOf(
                     {
-                        DocumentContent {
+                        ApplicationDocumentContainer(model = containerModel) {
                             Text("Hello There")
                         }
                     },
                     {
-                        DocumentContent {
+                        ApplicationDocumentContainer(model = containerModel) {
                             Text("General Kenobi")
                         }
                     }

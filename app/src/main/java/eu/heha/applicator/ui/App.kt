@@ -1,4 +1,4 @@
-package eu.heha.applicator
+package eu.heha.applicator.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
