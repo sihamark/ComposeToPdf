@@ -8,11 +8,11 @@ Uses android [PdfDocument](https://developer.android.com/reference/android/graph
 - [ ] load model data from different source
   - [ ] from default location in project
   - [ ] from location selectable in the app
-- [ ] UI: show pdf generation result in ui
-- [ ] UI: open resulting file from the app
+- [x] UI: show pdf generation result in ui
+- [x] UI: open resulting file from the app
 - [ ] UI: Style Document, show preview in app
 - [ ] Docs: Write Tutorial for others with examples
 - [ ] Layout: Design Backgrounds and Styling
 - [ ] Layout: Add Layouts
-  - [ ] Cover Letter
+  - [x] Cover Letter
   - [ ] Profile (Skills, Experience, Education, Languages)
