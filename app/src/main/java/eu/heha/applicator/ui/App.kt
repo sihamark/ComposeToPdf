@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import eu.heha.applicator.model.DocumentRepository
 import eu.heha.applicator.model.PdfController
 import eu.heha.applicator.model.PdfController.DocumentResult.Error
 import eu.heha.applicator.model.PdfController.DocumentResult.Generating
@@ -53,6 +54,10 @@ fun App(
                     Button(onClick = generateDocument) {
                         Text("Generate document")
                     }
+                }
+
+                Button(onClick = { DocumentRepository.foo() }) {
+                    Text("Foo")
                 }
             }
         }
