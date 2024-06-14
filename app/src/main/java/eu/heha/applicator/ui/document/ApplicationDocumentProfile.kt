@@ -37,7 +37,7 @@ fun ApplicationDocumentProfile(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             sidePaneSections.forEach { section ->
-                ProfileSectionPane(section)
+                ProfileSectionCard(section)
             }
         }
         Spacer(Modifier.width(8.dp))
@@ -48,19 +48,19 @@ fun ApplicationDocumentProfile(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             mainPaneSections.forEach { section ->
-                ProfileSectionPane(section)
+                ProfileSectionCard(section)
             }
         }
     }
 }
 
 @Composable
-private fun ProfileSectionPane(section: ProfileSection, modifier: Modifier = Modifier) {
+private fun ProfileSectionCard(section: ProfileSection, modifier: Modifier = Modifier) {
     when (section) {
-        is ProfileSection.ContactSection -> ContactPane(section, modifier)
-        is ProfileSection.HighlightSection -> HighlightPane(section, modifier)
-        is ProficiencySection -> ProficiencyPane(section, modifier)
-        is ProfileSection.ListSection -> ListPane(section, modifier)
+        is ProfileSection.ContactSection -> ContactCard(section, modifier)
+        is ProfileSection.HighlightSection -> HighlightCard(section, modifier)
+        is ProficiencySection -> ProficiencyCard(section, modifier)
+        is ProfileSection.ListSection -> ListCard(section, modifier)
     }
 }
 
@@ -82,7 +82,7 @@ private fun SectionCard(
 }
 
 @Composable
-private fun ProficiencyPane(
+private fun ProficiencyCard(
     section: ProficiencySection,
     modifier: Modifier = Modifier
 ) {
@@ -103,7 +103,7 @@ private fun ProficiencyPane(
 }
 
 @Composable
-private fun ListPane(
+private fun ListCard(
     section: ProfileSection.ListSection,
     modifier: Modifier = Modifier
 ) {
@@ -115,7 +115,7 @@ private fun ListPane(
 }
 
 @Composable
-private fun ContactPane(section: ProfileSection.ContactSection, modifier: Modifier = Modifier) {
+private fun ContactCard(section: ProfileSection.ContactSection, modifier: Modifier = Modifier) {
     SectionCard(section.type, modifier) {
         section.contacts.forEach { (platform, link) ->
             Text(
@@ -127,7 +127,7 @@ private fun ContactPane(section: ProfileSection.ContactSection, modifier: Modifi
 }
 
 @Composable
-private fun HighlightPane(section: ProfileSection.HighlightSection, modifier: Modifier = Modifier) {
+private fun HighlightCard(section: ProfileSection.HighlightSection, modifier: Modifier = Modifier) {
     SectionCard(section.type, modifier) {
         section.highlights.forEach { highlight ->
             Column(modifier = Modifier.padding(bottom = 8.dp)) {
